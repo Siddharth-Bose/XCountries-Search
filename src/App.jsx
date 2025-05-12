@@ -8,12 +8,16 @@ const endpoint =
   "https://countries-search-data-prod-812920491762.asia-south1.run.app/countries";
 
 function App() {
+  // State variable: All countries
   const [countries, setCountries] = useState([]);
+  // State variable: Filtered countries
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [timer, setTimer] = useState(null);
   const [searchText, setSearchText] = useState("");
 
+  // useEffect: runs on initial render
   useEffect(() => {
+    // Function to fetch countries
     const fetchCountries = async () => {
       try {
         const response = await fetch(endpoint);
@@ -27,7 +31,9 @@ function App() {
     fetchCountries();
   }, []);
 
+  // useEffect: runs whenever the searchText or countries change
   useEffect(() => {
+    // Debounce logic
     if (timer) {
       clearTimeout(timer);
     }
@@ -44,7 +50,9 @@ function App() {
 
   return (
     <div>
+      {/* Navbar */}
       <nav className="header">
+        {/* Searchbar */}
         <input
           type="text"
           name="search"
