@@ -15,10 +15,14 @@ function App() {
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const response = await fetch(endpoint);
-      const data = await response.json();
-      setCountries(data);
-      setFilteredCountries(data);
+      try {
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        setCountries(data);
+        setFilteredCountries(data);
+      } catch (error) {
+        console.error("Error fetching countries: ", error);
+      }
     };
     fetchCountries();
   }, []);
@@ -33,7 +37,7 @@ function App() {
         return country.common.toLowerCase().includes(searchText.toLowerCase());
       });
       setFilteredCountries(filtered);
-    }, 300);
+    }, 100);
 
     setTimer(timerObj);
   }, [countries, searchText]);
